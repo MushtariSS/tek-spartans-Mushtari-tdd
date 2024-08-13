@@ -18,7 +18,7 @@ public class ActivityOne {
     @Test
     public void testFacebookTitle(){
         String applicationTitle = driver.getTitle();
-        Assert.assertEquals(applicationTitle, "xFacebook - log in or sign up");
+        Assert.assertEquals(applicationTitle, "Facebook - log in or sign up");
     }
 
     @AfterMethod
