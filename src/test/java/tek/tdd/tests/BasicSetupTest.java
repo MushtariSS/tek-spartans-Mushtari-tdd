@@ -19,6 +19,7 @@ public class BasicSetupTest extends UIBaseClass {
     Navigate to retail app and make sure top-left corner text in TEKSCHOOL
     And make sure Sign in button is enabled.
      */
+    @Test
     public void validateTopLeftCornerText(){
         String actualCornerText = getElementText(By.linkText("TEKSCHOOL"));
         Assert.assertEquals(actualCornerText,"TEKSCHOOL", "Logo text should match");

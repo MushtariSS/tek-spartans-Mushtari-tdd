@@ -32,7 +32,7 @@ public abstract class BaseSetup {
 
     public BaseSetup() {
         //reading
-        String ConfigFieldPath = System.getProperty("user.dir") + "src/test/java/configs/dev-config.properties";
+        String ConfigFieldPath = System.getProperty("user.dir") + "/src/test/resources/configs/dev-config.properties";
 
 
         try {
