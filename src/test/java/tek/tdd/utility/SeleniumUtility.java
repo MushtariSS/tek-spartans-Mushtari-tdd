@@ -1,4 +1,6 @@
 package tek.tdd.utility;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -8,29 +10,52 @@ import tek.tdd.base.BaseSetup;
 import java.time.Duration;
 
 public class SeleniumUtility extends BaseSetup {
+    private static final Logger LOGGER = LogManager.getLogger(SeleniumUtility.class);;
     private WebDriverWait getWait() {
-        return  new WebDriverWait(getDriver(), Duration.ofSeconds(20));
+        return  new WebDriverWait(getDriver(), Duration.ofSeconds(WAIT_IN_SECOND));
     }
-    private WebElement waitForVisibility (By locator){
-        return getWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
+    public String getElementText(By locator) {
+        LOGGER.debug("Returning element Text {}", locator);
+        return getWait().until(ExpectedConditions.visibilityOfElementLocated(locator))
+                .getText();
     }
-    public void clickOnElement (By locator){
-        getWait().until(ExpectedConditions.elementToBeClickable(locator)).click();
+    public String getElementText(WebElement element) {
+        LOGGER.debug("Returning element Text {}", element);
+        return getWait().until(ExpectedConditions.visibilityOf(element))
+                .getText();
     }
-    public void sendKeysToElement (By locator, String value) {
-        WebElement element = waitForVisibility(locator);
-        element.clear();
-        element.sendKeys(value);
+    public boolean isElementEnabled(By locator){
+        LOGGER.debug("Checking element enable status {}",locator);
+        boolean isEnabled = getWait().until(ExpectedConditions.visibilityOfElementLocated(locator))
+                .isEnabled();
+        LOGGER.debug("element enabled status{}",isEnabled);
+        return isEnabled;
     }
-    public String getElementText (By locator){
-        return waitForVisibility(locator).getText();
+    public boolean isElementEnabled(WebElement element) {
+        LOGGER.debug("Checking element enabled status{}", element);
+        boolean isEnabled = getWait().until(ExpectedConditions.visibilityOf(element))
+                .isEnabled();
+        LOGGER.debug("element is enabled status {}", isEnabled);
+        return isEnabled;
     }
-    public boolean  isElementEnabled(By locator){
-        return waitForVisibility(locator).isEnabled();
+    public void sendText(WebElement element,String text){
+        LOGGER.debug("Sending text {} to Element {}",text,element);
+        WebElement targetElement = getWait().until(ExpectedConditions.visibilityOf(element));
+        targetElement.clear();
+        targetElement.sendKeys(text);
     }
-    public boolean isElementDisplayed(By locator) {
-        return waitForVisibility(locator).isDisplayed();
-    }
-
-
+public void clickOnElement(WebElement element){
+        LOGGER.debug("Click on Element{}",element);
+        getWait().until(ExpectedConditions.elementToBeClickable(element))
+                .click();
 }
+public boolean isElementDisplayed(WebElement element){
+        LOGGER.debug("Checking element isDisabled {}",element);
+        return getWait().until(ExpectedConditions.visibilityOf(element))
+                .isDisplayed();
+}
+    }
+
+
+
+
