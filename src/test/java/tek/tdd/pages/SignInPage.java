@@ -1,5 +1,6 @@
 package tek.tdd.pages;
 
+import com.aventstack.extentreports.service.ExtentTestManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -11,14 +12,22 @@ public class SignInPage extends SeleniumUtility {
     }
 
         @FindBy(id = "email")
-        public WebElement email;
+        public WebElement emailInput;
     @FindBy(name = "password")
-    public WebElement password;
+    public WebElement passwordInput;
+    @FindBy(className = "error")
+    public WebElement errorMessage;
+    @FindBy(linkText = "Create New Account")
+    public WebElement createNewAccountLink;
     @FindBy(id = "loginBtn")
-    public WebElement loginBtn;
-
-    @FindBy(id = "newAccountBtn")
-    public WebElement createNewAccountBtn;
+    public WebElement loginButton;
+    public void doSignIn(String email, String password) {
+        ExtentTestManager.getTest()
+                .info("Signin In with " + email + " And " + password);
+        sendText(emailInput, email);
+        sendText(passwordInput, password);
+        clickOnElement(loginButton);
+    }
 
 
 
